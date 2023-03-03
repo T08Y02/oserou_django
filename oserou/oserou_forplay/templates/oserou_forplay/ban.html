@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>reversi field</title>
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" >
+
+        <!--　静的ファイル読み込み -->
+        {% load static %}
+
+        <!-- JavaScript読み込み -->
+        <script src="{% static 'js/ban.js' %}"></script>
+
+        <!-- CSS読み込み -->
+        <link rel="stylesheet" href="{% static 'css/ban.css' %}">
+
+    </head>
+    <body onload="init()">
+        <h1> here is ban </h1>
+        <table id="board"></table>
+    </body>
+</html>

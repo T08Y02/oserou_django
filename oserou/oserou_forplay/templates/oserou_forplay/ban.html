@@ -18,11 +18,21 @@
 
         <!-- contextの変数をjavascriptで扱う際、中身を一旦変数化しておく必要がある-->
         <script>
-            board_state = {{ board_state_key }}
+            let board_state = {{ board_state_key }}
+            let selected_row = 8
+            let selected_collumn = 8
         </script>
     </head>
     <body onload="init()">
         <h1> here is ban </h1>
         <table id="board"></table>
+        <form action="{% url 'oserou_forplay:refresh_board' %}" method="post">
+            {% csrf_token %}
+                <input type="hidden" name="board_state" id="board_state_send">
+                <input type="hidden" name="selected_row" id="selected_row_send">
+                <input type="hidden" name="selected_collumn" id="selected_collumn_send">
+                <input type="hidden" name="color" id="color_send">
+            <input type="submit" value="Complete">
+        </form>
     </body>
 </html>

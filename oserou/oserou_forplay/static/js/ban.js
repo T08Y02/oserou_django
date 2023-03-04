@@ -5,8 +5,15 @@
 */
 
 function buttonClick(e){
+  refreshBoard(board_state);
   alert('Click' + this.row +  this.collumn);
-  refreshBoard();
+  selected_row = this.row;
+  selected_collumn = this.collumn;
+  document.getElementById("board_state_send").value = board_state;
+  document.getElementById("selected_row_send").value = selected_row;
+  document.getElementById("selected_collumn_send").value = selected_collumn;
+  document.getElementById("color_send").value = 2;
+  stoneColorChange(selected_row, selected_collumn, "red");
 }
 
 function stoneColorChange(row, collumn, new_color){
@@ -37,8 +44,7 @@ function initBoard(){
         board_state[i] = new Array(8).fill(0);
       }
     }
-    alert(board_state);
-    refreshBoard(board_state);
+  refreshBoard(board_state);
 }
 
 function init(){
@@ -58,6 +64,5 @@ function init(){
     }
     board.appendChild(tr);
   }
-  alert(board_state);
   refreshBoard(board_state);
 }

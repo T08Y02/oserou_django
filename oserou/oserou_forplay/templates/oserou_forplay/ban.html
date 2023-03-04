@@ -16,6 +16,10 @@
         <!-- CSS読み込み -->
         <link rel="stylesheet" href="{% static 'css/ban.css' %}">
 
+        <!-- contextの変数をjavascriptで扱う際、中身を一旦変数化しておく必要がある-->
+        <script>
+            board_state = {{ board_state_key }}
+        </script>
     </head>
     <body onload="init()">
         <h1> here is ban </h1>

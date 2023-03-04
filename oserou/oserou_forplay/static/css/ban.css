@@ -1,3 +1,9 @@
+/* 
+0 = blank
+1 = black
+2 = white
+*/
+
 table {
     border: 3px solid black;
     border-collapse: collapse;

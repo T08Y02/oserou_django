@@ -28,6 +28,7 @@ function refreshBoard(board_state){
       stoneColorChange(r, c, new_color);
     }
   }
+
 }
 
 function initBoard(){
@@ -44,7 +45,7 @@ function initBoard(){
       }
     }
   refreshBoard(board_state);
-  alert("init!")
+  alert("turn " + (turn+1) + "\n" + "first move" + "'s turn");
 }
 
 function init(){

@@ -2,7 +2,7 @@ import asyncio
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
-from oserou_forplay.modules import placestone
+from oserou_forplay.modules import placestone, calcscore
 from django.urls import reverse
 import numpy as np
 
@@ -27,10 +27,29 @@ def boardRefresh(request):
     board_state = request.POST.get('board_state')
     board_state = board_state.split(",")
     board_state = np.array(board_state, dtype=np.int64).reshape(8, 8)
-    new_board_state = placestone.board_placestone(board_state, selected_row, selected_collumn, color)
-    new_board_state = new_board_state.tolist()
+    
+    bestscore = 0
+    for i in range(8):
+        for j in range(8):
+            if board_state[i][j] == 0:
+                bestscore = max([bestscore, calcscore.score_count(board_state, i, j, color)])
+                
+
+    #valid 0:OK, 1:not valid input, 2:pass
+    valid = 0
+    if board_state[selected_row][selected_collumn] != 0 or \
+        calcscore.score_count(board_state, selected_row, selected_collumn, color) <= 0:
+        if bestscore <= 0:
+            valid = 2
+        else:
+            valid = 1
+    
+    if valid == 0:
+        new_board_state = placestone.board_placestone(board_state, selected_row, selected_collumn, color)
+        board_state = new_board_state
     d = {
-        'new_board_state': new_board_state,
+        'new_board_state': board_state.tolist(),
+        'return_code' : valid,
     }
     return JsonResponse(d)
 

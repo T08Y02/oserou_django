@@ -19,8 +19,6 @@
         <!-- contextの変数をjavascriptで扱う際、中身を一旦変数化しておく必要がある-->
         <script>
             let board_state = {{ board_state_key }}
-            let selected_row = 8
-            let selected_collumn = 8
         </script>
     </head>
     <body onload="init()">
@@ -84,7 +82,20 @@
                 })
                 .done(function(response){
                     board_state = response.new_board_state
+                    let valid = response.return_code
                     refreshBoard(board_state);
+                    if (valid == 0){
+                        turn++;
+                        alert("turn " + turn)
+                    }
+                    else if(valid == 1){
+                        alert("invalid input. choose another cell.")
+                    }
+                    else if(valid == 2){
+                        alert("passed(there are no valid cells.)")
+                        turn++;
+                        pass++;
+                    }
                     //alert(response.new_board_state);
                 });
             });

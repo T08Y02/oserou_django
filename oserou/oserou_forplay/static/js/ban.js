@@ -11,7 +11,7 @@ function buttonClick(e){
   document.getElementById("board_state_send").value = board_state;
   document.getElementById("selected_row_send").value = selected_row;
   document.getElementById("selected_collumn_send").value = selected_collumn;
-  document.getElementById("color_send").value = 1;
+  document.getElementById("color_send").value = turn % 2 + 1;
   stoneColorChange(selected_row, selected_collumn, "red");
 }
 
@@ -31,6 +31,7 @@ function refreshBoard(board_state){
 }
 
 function initBoard(){
+  turn = 0;
   for(let i = 0; i < 8; i++) {
       if (i == 3){
         board_state[i] = [0, 0, 0, 2, 1, 0, 0, 0];

@@ -257,7 +257,6 @@ def ban_reverse_onestone(ban, gyou, retsu, color):
                     break
     for i in range(hidariue):
         ban = ban_reverse(ban, gyou - i - 1, retsu - i - 1)
-
     return ban
 
 def board_placestone(ban, gyou, retsu, color):

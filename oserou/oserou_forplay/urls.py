@@ -7,5 +7,5 @@ app_name = "oserou_forplay"
 urlpatterns = [
     path('', views.index, name='index'),
     path('board', views.board, name='board'),
-    path('board_refresh', views.boardRefresh, name='refresh_board'),
+    path('board_refresh', views.boardRefresh, name='board_refresh'),
 ]

@@ -1,11 +1,10 @@
 import asyncio
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from oserou_forplay.modules import placestone
 from django.urls import reverse
 import numpy as np
-import json
 
 
 # Create your views here.
@@ -22,16 +21,16 @@ def board(request):
 
 def boardRefresh(request):
     #board_stateは文字列として渡されているので注意
-    board_state = request.POST.get('board_state')
-    board_state = board_state.split(",")
-    board_state = np.array(board_state).reshape(8, 8)
+    color = int(request.POST.get('color'))
     selected_collumn = int(request.POST.get('selected_collumn'))
     selected_row = int(request.POST.get('selected_row'))
-    color = int(request.POST.get('color'))
+    board_state = request.POST.get('board_state')
+    board_state = board_state.split(",")
+    board_state = np.array(board_state, dtype=np.int64).reshape(8, 8)
     new_board_state = placestone.board_placestone(board_state, selected_row, selected_collumn, color)
-    template = loader.get_template('oserou_forplay/ban.html')
-    context = {
-        'board_state_key': new_board_state,
+    new_board_state = new_board_state.tolist()
+    d = {
+        'new_board_state': new_board_state,
     }
-    return HttpResponse(template.render(context, request))
+    return JsonResponse(d)
 

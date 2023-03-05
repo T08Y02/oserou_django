@@ -18,11 +18,76 @@
 
         <!-- contextの変数をjavascriptで扱う際、中身を一旦変数化しておく必要がある-->
         <script>
-            board_state = {{ board_state_key }}
+            let board_state = {{ board_state_key }}
+            let selected_row = 8
+            let selected_collumn = 8
         </script>
     </head>
     <body onload="init()">
         <h1> here is ban </h1>
         <table id="board"></table>
+        <form id ="board_refresh" action="{% url 'oserou_forplay:board_refresh' %}" method="post">
+            {% csrf_token %}
+                <input type="hidden" id="board_state_send">
+                <input type="hidden" id="selected_row_send">
+                <input type="hidden" id="selected_collumn_send">
+                <input type="hidden" id="color_send" value ="2">
+            <input type="submit" value="Complete">
+        </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            $('#board_refresh').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    'url': '{% url "oserou_forplay:board_refresh" %}',
+                    'type': 'POST',
+                    'data': {
+                        'board_state': $('#board_state_send').val(),
+                        'selected_row': $('#selected_row_send').val(),
+                        'selected_collumn': $('#selected_collumn_send').val(),
+                        'color': $('#color_send').val(),
+                    },
+                    'dataType': 'json'
+                })
+                .done(function(response){
+                    board_state = response.new_board_state
+                    refreshBoard(board_state);
+                    //alert(response.new_board_state);
+                });
+            });
+        </script>
     </body>
 </html>

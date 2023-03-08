@@ -1,9 +1,5 @@
-import os
-import time
-import random
-import math
-
 from oserou_forplay.modules import placestone, calcscore
+from oserou_forplay.modules import constant as const
 
 def bestScore(board_state, color):
     bestscore = 0
@@ -15,6 +11,7 @@ def bestScore(board_state, color):
 
 def checkValid(board_state, selected_row, selected_collumn, color):
     valid = 0
+
     bestscore = bestScore(board_state, color)
     if board_state[selected_row][selected_collumn] != 0 or \
         calcscore.score_count(board_state, selected_row, selected_collumn, color) <= 0:

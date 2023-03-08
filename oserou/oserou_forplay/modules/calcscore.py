@@ -1,17 +1,12 @@
-import os
-import time
-import random
-import math
+from oserou_forplay.modules import constant as const
 
 def score_count(ban, gyou, retsu, color):
-    before_c = 0
-    after_c = 0
-    if color == 2:
-        before_c = 1
-        after_c = 2
+    if color == const.WHITE:
+        before_c = const.BLACK
+        after_c = const.WHITE
     else:
-        before_c = 2
-        after_c = 1
+        before_c = const.WHITE
+        after_c = const.BLACK
 
     ue = 0
     migiue = 0

@@ -1,31 +1,25 @@
-import os
-import time
-import random
-import math
-
+from oserou_forplay.modules import constant as const
 
 def ban_place(ban, gyou, retsu, color):
     ban[gyou][retsu] = color
     return ban
 
 def ban_reverse(ban, gyou, retsu):
-    if ban[gyou][retsu] == 1:
-        ban[gyou][retsu] = 2
-    elif ban[gyou][retsu] == 2:
-        ban[gyou][retsu] = 1
+    if ban[gyou][retsu] == const.BLACK:
+        ban[gyou][retsu] = const.WHITE
+    elif ban[gyou][retsu] == const.WHITE:
+        ban[gyou][retsu] = const.BLACK
     else:
         print("error")
     return ban
 
 def ban_reverse_onestone(ban, gyou, retsu, color):
-    before_c = 0
-    after_c = 0
-    if color == 2:
-        before_c = 1
-        after_c = 2
+    if color == const.WHITE:
+        before_c = const.BLACK
+        after_c = const.WHITE
     else:
-        before_c = 2
-        after_c = 1
+        before_c = const.WHITE
+        after_c = const.BLACK
     ue = 0
     migiue = 0
     migi = 0

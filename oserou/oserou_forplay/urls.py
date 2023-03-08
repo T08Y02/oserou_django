@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('board', views.board, name='board'),
     path('board_refresh', views.boardRefresh, name='board_refresh'),
+    path('result', views.result, name='result'),
 ]

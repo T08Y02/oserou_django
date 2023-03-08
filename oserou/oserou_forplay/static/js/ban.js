@@ -29,6 +29,11 @@ function refreshBoard(board_state){
     }
   }
 
+  document.getElementById("selected_row_send").value = -1;
+  document.getElementById("selected_collumn_send").value = -1;
+  document.getElementById("board_state_send").value = board_state;
+  document.getElementById("board_state_result").value = board_state;
+  document.getElementById("color_send").value = turn % 2 + 1;
 }
 
 function initBoard(){

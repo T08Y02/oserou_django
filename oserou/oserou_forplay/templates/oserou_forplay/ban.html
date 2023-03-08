@@ -30,7 +30,13 @@
                 <input type="hidden" id="selected_row_send">
                 <input type="hidden" id="selected_collumn_send">
                 <input type="hidden" id="color_send" value ="2">
-            <input type="submit" value="Complete">
+            <input type="submit" value="submit your choice">
+        </form>
+
+        <form id ="end_game" action="{% url 'oserou_forplay:result' %}" method="post">
+            {% csrf_token %}
+                <input type="hidden" name = 'result' id="board_state_result">
+            <input type="submit" value="show result(end game)">
         </form>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -97,17 +103,20 @@
                         pass++;
                     }
                     else if(valid == 3){
-
+                        alert("finish")
                     }
-                    else:
+                    else if(valid == 4){
+                        alert("submit your action.")
+                    }
+                    else{
                         alert("oh no")
+                    }
 
                     if ((turn)%2 == 0){
                         player = "first move";
                     }
                     else{
-                        player = "second move";
-                        
+                        player = "second move";      
                     }
                     alert("turn " + (turn+1) + "\n" + player + "'s turn");
                 });

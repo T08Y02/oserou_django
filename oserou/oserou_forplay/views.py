@@ -1,8 +1,8 @@
 import asyncio
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
-from oserou_forplay.modules import placestone, calcscore, findinvalidinput as fii
+from oserou_forplay.modules import placestone, calcscore, findinvalidinput as fii, calcresult
 
 from django.urls import reverse
 import numpy as np
@@ -28,7 +28,7 @@ def boardRefresh(request):
     board_state = request.POST.get('board_state')
     board_state = board_state.split(",")
     board_state = np.array(board_state, dtype=np.int64).reshape(8, 8)                
-    #valid 0:OK, 1:not valid input, 2:pass
+    #valid 0:OK, 1:not valid input, 2:pass, 3:finish, 4:invalid pass
     valid = fii.checkValid(board_state, selected_row, selected_collumn, color)
     if valid == 0:
         new_board_state = placestone.board_placestone(board_state, selected_row, selected_collumn, color)
@@ -39,3 +39,14 @@ def boardRefresh(request):
     }
     return JsonResponse(d)
 
+def result(request):
+    board_state = request.POST.get('result')
+    board_state = board_state.split(",")
+    board_state = np.array(board_state, dtype=np.int64).reshape(8, 8)
+    [winner, score] = calcresult.winner(board_state)
+    template = loader.get_template('oserou_forplay/result.html')
+    context = {
+        'winner' : winner,
+        'score' : score,
+    }
+    return HttpResponse(template.render(context, request))

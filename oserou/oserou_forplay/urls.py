@@ -6,6 +6,8 @@ app_name = "oserou_forplay"
 
 urlpatterns = [
     path('', play.index, name='index'),
+    path('apply', play.apply, name='apply'),
+    path('match/<int:first_player_id>/<int:second_player_id>', play.match, name='match'),
     path('board', play.board, name='board'),
     path('board_refresh', play.boardRefresh, name='board_refresh'),
     path('result', play.result, name='result'),

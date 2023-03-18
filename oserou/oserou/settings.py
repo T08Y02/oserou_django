@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'oserou.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'oserou',
+        'USER': 'dbuser',
+        'PASSWORD': '0ser0uda2e',
+        'HOST': 'db',
+        'PORT': '3306',
     }
 }
 

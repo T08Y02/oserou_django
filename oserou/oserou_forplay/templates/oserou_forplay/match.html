@@ -24,7 +24,7 @@
     <body onload="init()">
         <h1> here is ban </h1>
         <table id="board"></table>
-        <form id ="board_refresh" action="{% url 'oserou_forplay:board_refresh' %}" method="post">
+        <form id ="board_refresh" action="{% url 'oserou_forplay:match_board_refresh' %}" method="post">
             {% csrf_token %}
                 <input type="hidden" id="board_state_send">
                 <input type="hidden" id="selected_row_send">
@@ -33,7 +33,7 @@
             <input type="submit" value="submit your choice">
         </form>
 
-        <form id ="end_game" action="{% url 'oserou_forplay:result' %}" method="post">
+        <form id ="end_game" action="/play/match/result/{{first_player.id}}/{{second_player.id}}" method="post">
             {% csrf_token %}
                 <input type="hidden" name = 'result' id="board_state_result">
             <input type="submit" value="show result(end game)">

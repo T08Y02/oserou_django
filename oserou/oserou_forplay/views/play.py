@@ -1,4 +1,3 @@
-import asyncio
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
@@ -15,28 +14,6 @@ from ..models import PlayerUser, Result
 @login_required
 def index(request):
     return HttpResponse("Hello, world. You're at the play index.")
-
-@login_required
-def apply(request):
-    all_players = PlayerUser.objects.all()
-    context = {
-        'players': all_players
-    }
-    template = loader.get_template('oserou_forplay/apply.html')
-    return HttpResponse(template.render(context, request))
-
-@login_required
-def match(request, first_player_id, second_player_id):
-    first_player = PlayerUser.objects.filter(pk = first_player_id).get()
-    second_player = PlayerUser.objects.filter(pk = second_player_id).get()
-    print(first_player)
-    context = {
-        'first_player': first_player,
-        'second_player': second_player,
-        'board_state_key': [[1 for i in range(8)] for j in range(8)],
-    }
-    template = loader.get_template('oserou_forplay/match.html')
-    return HttpResponse(template.render(context, request))
 
 @login_required
 def board(request):

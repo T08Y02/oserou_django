@@ -1,18 +1,21 @@
-import asyncio
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from oserou_forplay.modules import placestone, calcscore, findinvalidinput as fii, calcresult
-
 from django.urls import reverse
 import numpy as np
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from ..models import PlayerUser, Result
 
 
 # Create your views here.
 
+@login_required
 def index(request):
     return HttpResponse("Hello, world. You're at the play index.")
 
+@login_required
 def board(request):
     template = loader.get_template('oserou_forplay/ban.html')
     context = {
@@ -20,6 +23,7 @@ def board(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
 def boardRefresh(request):
     #board_stateは文字列として渡されているので注意
     color = int(request.POST.get('color'))
@@ -39,6 +43,7 @@ def boardRefresh(request):
     }
     return JsonResponse(d)
 
+@login_required
 def result(request):
     board_state = request.POST.get('result')
     board_state = board_state.split(",")

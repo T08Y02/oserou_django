@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
 
 #ユーザモデルを指定
 AUTH_USER_MODEL = 'oserou_forplay.PlayerUser'
@@ -24,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xv1g3jl-43s(o)sfavf$*=i^g3d228lxsw+esrgowzidcc+nu#'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,17 +81,7 @@ WSGI_APPLICATION = 'oserou.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'oserou',
-        'USER': 'dbuser',
-        'PASSWORD': '0ser0uda2e',
-        'HOST': 'db',
-        'PORT': '3306',
-    }
-}
-
+DATABASES = env('DATABASES')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
